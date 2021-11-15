@@ -1,4 +1,4 @@
-* **Bibliothèque standard**:
+## Bibliothèque standard:
 <br> <ul> #include <string.h>
 <br> #include <stdio.h>
 <br> #include <stdlib.h>
@@ -9,11 +9,11 @@
 <br> #include <string.h>
 </ul>
 
-* **Références**:
-<br> <ul> Aucune référence</ul>
+## Références:
+Aucune référence
 
-* **Difficulté**: 
-<br> <ul> Moyen </ul>
+## Difficulté: 
+Moyen 
 
-* **Commentaires**: 
+## Commentaires: 
 
