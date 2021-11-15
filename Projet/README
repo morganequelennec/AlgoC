@@ -1,25 +1,19 @@
-# Bibliothèques
+* **Bibliothèque standard**:
+<br> <ul> #include <string.h>
+<br> #include <stdio.h>
+<br> #include <stdlib.h>
+<br> #include <unistd.h>
+<br> #include <sys/types.h>
+<br> #include <sys/socket.h>
+<br> #include <netinet/in.h>
+<br> #include <string.h>
+</ul>
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>  
-#include <sys/socket.h>
-#include <netinet/in.h>
+* **Références**:
+<br> <ul> Aucune référence</ul>
 
-#include "client.h"
-#include "bmp.h"
+* **Difficulté**: 
+<br> <ul> Moyen </ul>
 
-# Références
-
-Pas de référence 
-
-# Difficulté
-
-moyen
-
-# Commentaires
-* 
-* 
+* **Commentaires**: 
 
