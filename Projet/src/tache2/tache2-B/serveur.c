@@ -69,9 +69,11 @@ int renvoie_nom(int client_socket_fd, char *data)
 }
 
 // renvoie un json contenant le message du serveur
-int renvoie_message(int client_socket_fd, char* message) {
+int renvoie_message(int client_socket_fd, char* message, char* code) {
     char jsonMessage[256];
-    strcpy(jsonMessage, "{\n\t\"code\" : \"message\"\n\t\"valeurs\" : [\"");
+    strcpy(jsonMessage, "\n{\n\t\"code\" : \"");
+    strcat(jsonMessage, code);
+    strcat(jsonMessage, "\",\n\t\"valeurs\" : [ ");
     strcat(jsonMessage, message);
     strcat(jsonMessage, "\" ]\n}");
 
@@ -88,7 +90,7 @@ int renvoie_message(int client_socket_fd, char* message) {
 // reçoit numero, calcule et renvoie le resultat
 int recois_numeros_calcule(int socketfd, char *operator, char * num1, char *num2)
 {
-    printf("Le calcul à faire est: %s %s %s \n", operator, num1, num2);
+    printf("Le calcul à faire est: %s %s %s \n", num1, operator, num2);
     double nb1 = atof(num1);
     double nb2 = atof(num2);
     double resultat;
@@ -113,9 +115,8 @@ int recois_numeros_calcule(int socketfd, char *operator, char * num1, char *num2
     }
     // Conversion float -> chaine de caractère
     sprintf(reponse, "%f", resultat);
-    char code[10] = "calcule: ";
 
-    renvoie_message(socketfd, strcat(code, reponse));
+    renvoie_message(socketfd, reponse, "calcule");
 
     //fermer le socket
     close(socketfd);
@@ -123,32 +124,32 @@ int recois_numeros_calcule(int socketfd, char *operator, char * num1, char *num2
 
 int recois_couleurs(int socketfd, char args[30][256])
 {
-    int nb_couleurs = atoi(args[1]);
+    int nb_couleurs = atoi(args[0]);
     printf("%d couleurs à enregistrer\n", nb_couleurs);
     FILE *file = fopen("SauvegardeCouleurs.txt", "w");
-    for (int i = 2; i < nb_couleurs + 2; i++)
+    for (int i = 1; i < nb_couleurs + 1; i++)
     {
         printf("%s enregistré !\n", args[i]);
         fputs(args[i], file);
     }
 
-    char message[1024] = "couleurs: Enregistré";
-    renvoie_message(socketfd, message);
+    char message[1024] = "Enregistré";
+    renvoie_message(socketfd, message, "couleurs");
 }
 
 int recois_balises(int socketfd, char args[30][256])
 {
-    int nb_balises = atoi(args[1]);
+    int nb_balises = atoi(args[0]);
     printf("%d balises à enregistrer\n", nb_balises);
     FILE *file = fopen("SauvegardeBalises.txt", "w");
-    for (int i = 2; i < nb_balises + 2; i++)
+    for (int i = 1; i < nb_balises + 1; i++)
     {
         printf("%s enregistré !\n", args[i]);
         fputs(args[i], file);
     }
 
-    char message[1024] = "balises: Enregistré";
-    renvoie_message(socketfd, message);
+    char message[1024] = "Enregistré";
+    renvoie_message(socketfd, message, "balises");
 }
 
 /* accepter la nouvelle connexion d'un client et lire les données
@@ -254,7 +255,7 @@ int recois_envoie_message(int socketfd)
     {
         printf("Saisir message: ");
         scanf("%s", message);
-        renvoie_message(client_socket_fd, message);
+        renvoie_message(client_socket_fd, message, "message");
     }
     else if (strcmp(code, "nom") == 0)
     {
