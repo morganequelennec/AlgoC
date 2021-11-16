@@ -15,8 +15,8 @@
 
 /* 
  * Fonction d'envoi et de réception de messages
- * Il faut un argument : l'identifiant de la socket
+ * Il faut des arguments : l'identifiant de la socket, la chaîne de caractère à modifier, le code de la fonction utilisée.
  */
-int envoie_recois_message(int socketfd, char *data);
+int envoie_recois_message(int socketfd, char* data, char* code);
 
 #endif
