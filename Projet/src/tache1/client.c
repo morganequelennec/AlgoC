@@ -53,13 +53,12 @@ void analyse(char *pathname, char *data)
  * Il faut un argument : l'identifiant de la socket
  */
 
-int envoie_recois_message(int socketfd, char* data)
+int envoie_recois_message(int socketfd, char* data, char* code)
 {
     // Demander à l'utilisateur d'entrer un message
     char message[100];
-    printf("Votre message (max 1000 caracteres): ");
     fgets(message, 1024, stdin);
-    strcpy(data, "message: ");
+    strcpy(data, code);
     strcat(data, message);
     return 0;
 }
@@ -71,40 +70,6 @@ int envoie_nom_de_client(int socketfd, char* data)
     gethostname(nomClient, 256);
     strcpy(data, "nom: ");
     strcat(data, nomClient);
-    return 0;
-}
-
-//envoie une operation et des nombres a calculer
-int envoie_operateur_numeros(int socketfd, char* data)
-{
-    // Demander à l'utilisateur d'entrer une opération
-    char message[100];
-    printf("Saisir une operation sous le format : [Operateur / nombre1 / nombre 2]");
-    fgets(message, 1024, stdin);
-    strcpy(data, "calcule: ");
-    strcat(data, message);
-    return 0;
-}
-
-int envoie_couleurs(int socketfd, char* data)
-{
-    // Demander à l'utilisateur d'entrer des couleurs
-    char message[100];
-    printf("Vos couleurs : (Format: nbCouleurs couleur1 couleur2 ... couleurN)\n");
-    fgets(message, 1024, stdin);
-    strcpy(data, "couleurs: ");
-    strcat(data, message);
-    return 0;
-}
-
-int envoie_balises(int socketfd, char* data)
-{
-    // Demander à l'utilisateur d'entrer des balises
-    char message[100];
-    printf("Vos balises : (Format: nbbalises balise1 balise2 ... balisesN)\n");
-    fgets(message, 1024, stdin);
-    strcpy(data, "balises: ");
-    strcat(data, message);
     return 0;
 }
 
@@ -154,7 +119,8 @@ int main(int argc, char **argv)
         while ((c = getchar()) != EOF && c != '\n');
         if (strcmp(fonction, "message") == 0)
         {
-            envoie_recois_message(socketfd, data);
+            printf("Votre message (max 1000 caracteres): ");
+            envoie_recois_message(socketfd, data, "message: ");
             done = 1;
         }
         else if (strcmp(fonction, "nom") == 0)
@@ -164,17 +130,20 @@ int main(int argc, char **argv)
         }
         else if (strcmp(fonction, "calcul") == 0)
         {
-            envoie_operateur_numeros(socketfd, data);
+            printf("Saisir une operation sous le format : [Operateur / nombre1 / nombre 2]");
+            envoie_recois_message(socketfd, data, "calcule: ");
             done = 1;
         }
         else if (strcmp(fonction, "couleurs") == 0)
         {
-            envoie_couleurs(socketfd, data);
+            printf("Vos couleurs : (Format: nbCouleurs couleur1 couleur2 ... couleurN)\n");
+            envoie_recois_message(socketfd, data, "couleurs: ");
             done = 1;
         }
         else if (strcmp(fonction, "balises") == 0)
-        {
-            envoie_balises(socketfd, data);
+        {    
+            printf("Vos balises : (Format: nbbalises balise1 balise2 ... balisesN)\n");
+            envoie_recois_message(socketfd, data, "balises: ");
             done = 1;
         }
         else
@@ -194,7 +163,6 @@ int main(int argc, char **argv)
 
     // la réinitialisation de l'ensemble des données
     memset(data, 0, sizeof(data));
-
     // lire les données de la socket
     int read_status = read(socketfd, data, sizeof(data));
     if (read_status < 0)
@@ -202,8 +170,6 @@ int main(int argc, char **argv)
         perror("erreur lecture");
         return -1;
     }
-
     printf("Message recu: %s\n", data);
-
     close(socketfd);
 }
