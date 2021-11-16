@@ -1,4 +1,6 @@
-## Bibliothèque standard:
+## Compte-rendu 
+
+**Bibliothèque standard:**
 <br> <ul> #include <string.h>
 <br> #include <stdio.h>
 <br> #include <stdlib.h>
@@ -9,11 +11,11 @@
 <br> #include <string.h>
 </ul>
 
-## Références:
+**Références:**
 Aucune référence
 
-## Difficulté: 
+**Difficulté:**
 Moyen 
 
-## Commentaires: 
+**Commentaires:**
 
