@@ -15,6 +15,8 @@
 
 #include "client.h"
 #include "bmp.h"
+#include "validateur.h"
+
 
 void analyse(char *pathname, char *data)
 {
@@ -96,10 +98,14 @@ int envoie_recois_message(int socketfd, char *data, char *code)
         strcat(data, message);
         strcat(data, "\"");
     }
-    strcat(data, " ]\n}");
+  strcat(data, " ]\n}");
+    if (verifieValiditeJSON(data) == 0) {
+        printf("\nJSON OK\n");
+    } else {
+        printf("\nJSON au mauvais format\n");
+    }
     return 0;
 }
-
 int main(int argc, char **argv)
 {
     int socketfd;

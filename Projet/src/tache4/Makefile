@@ -1,6 +1,6 @@
 CC ?= gcc
 
-COBJS ?= client.o bmp.o couleur.o
+COBJS ?= client.o bmp.o couleur.o validateur.o
 SOBJS ?= serveur.o 
 
 .SUFFIXES: .c .o
@@ -11,7 +11,7 @@ CLIENT = client
 all: $(SERVER) $(CLIENT)
 
 $(SERVER): $(SOBJS)
-	$(CC) -o $(SERVER) $(SOBJS) -lm
+	$(CC) -o $(SERVER) $(SOBJS)
 
 $(CLIENT): $(COBJS)
 	$(CC) -o $(CLIENT) $(COBJS)
